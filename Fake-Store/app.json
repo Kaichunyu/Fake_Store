@@ -7,7 +7,7 @@
 		"icon": "./assets/icon.png",
 		"userInterfaceStyle": "light",
 		"splash": {
-			"image": "./assets/SplashScreen2.png",
+			"image": "./assets/FakeStore-SplashScreen.png",
 			"resizeMode": "contain",
 			"backgroundColor": "black"
 		},
