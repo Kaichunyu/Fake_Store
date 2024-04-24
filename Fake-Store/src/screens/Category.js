@@ -43,8 +43,8 @@ export const Category = () => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "white",
 		flexDirection: "column",
+		marginTop: 60,
 	},
 	top: {
 		height: "8%",

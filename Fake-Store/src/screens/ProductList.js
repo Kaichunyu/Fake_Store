@@ -60,8 +60,8 @@ export const ProductList = () => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "white",
-		flexDirection: "column",
+    flexDirection: "column",
+    marginTop: 60,
 	},
 	top: {
 		height: "8%",
