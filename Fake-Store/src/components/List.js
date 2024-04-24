@@ -15,7 +15,7 @@ export const List = ({ data, onPress }) => {
 				data={data}
 				renderItem={({ item }) => (
 					<View style={styles.item}>
-						{item.id === undefined ? (
+						{item.name !== undefined ? (
 							<Pressable
 								style={({ pressed }) => [
 									styles.categoryButton,
@@ -24,10 +24,12 @@ export const List = ({ data, onPress }) => {
 									},
 								]}
 								onPress={() => {
-									onPress(item);
+									onPress(item.name);
 								}}
 							>
-								<Text style={styles.categoryText}>{formatCategory(item)}</Text>
+								<Text style={styles.categoryText}>
+									{formatCategory(item.name)}
+								</Text>
 							</Pressable>
 						) : (
 							<Pressable
@@ -37,7 +39,9 @@ export const List = ({ data, onPress }) => {
 										opacity: pressed ? 0.5 : 1.0,
 									},
 								]}
-								onPress={() => {}}
+								onPress={() => {
+									onPress(item.id);
+								}}
 							>
 								<View style={styles.imageContainer}>
 									<Image source={{ uri: item.image }} style={styles.image} />
@@ -91,6 +95,7 @@ const styles = StyleSheet.create({
 		height: 80,
 		borderRadius: 10,
 		borderWidth: 1,
+		resizeMode: "stretch",
 	},
 
 	detailContainer: {

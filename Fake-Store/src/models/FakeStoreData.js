@@ -12,8 +12,12 @@ export async function fetchCategories() {
     if (!res.ok) {
       throw new Error("Failed to fetch categories")
     }
-    const categories = await res.json();
-    
+		
+		const result = await res.json();
+		const categories = []
+			for (let i = 0; i < result.length; i++) {
+				categories.push({id: i, name: result[i]})
+			}
     return categories;
   } catch (error) {
     console.log("Error fetching categories:", error.message)
@@ -50,4 +54,16 @@ export async function fetchProducts(category) {
 	}
 }
 
-// fetchProducts("electronics");
+export async function fetchProduct(id) {
+	try {
+		const response = await fetch(url + id);
+		if (!response.ok) {
+			throw new Error("Failed to fetch product");
+		}
+		const products = await response.json();
+		return products;
+	} catch (error) {
+		console.error("Error fetching product:", error.message);
+		return [];
+	}
+}

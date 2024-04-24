@@ -1,4 +1,4 @@
-import { StyleSheet, Text, Pressable } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 export const ImageButton = ({ buttonname, iconname, action }) => {

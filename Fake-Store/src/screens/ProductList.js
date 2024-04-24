@@ -1,5 +1,5 @@
-import { StyleSheet, View } from "react-native";
-import { useState } from "react";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { useEffect, useState } from "react";
 import { formatCategory } from "../models/FakeStoreData";
 import { useNavigation } from "@react-navigation/native";
 import { Title } from "../components/Title";
@@ -18,13 +18,18 @@ export const ProductList = () => {
 	};
 
 	const [products, setProducts] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
 
-	fetchProducts(category).then((data) => {
-		setProducts(data);
-	});
+	useEffect(() => {
+		fetchProducts(category).then((data) => {
+			setProducts(data);
+			setIsLoading(false);
+		});
+	}, []);
 
-	const clickHandler = (category) => {
-		console.log(category);
+	const clickHandler = (id) => {
+		console.log(id);
+		navigation.navigate("ProductDetail", { id: id });
 	};
 
 	return (
@@ -34,7 +39,11 @@ export const ProductList = () => {
 			</View>
 
 			<View style={styles.middle}>
-				<List data={products} onPress={clickHandler} />
+				{isLoading ? (
+					<ActivityIndicator />
+				) : (
+					<List data={products} onPress={clickHandler} />
+				)}
 			</View>
 
 			<View style={styles.bottom}>

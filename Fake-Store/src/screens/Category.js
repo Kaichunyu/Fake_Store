@@ -1,5 +1,5 @@
-import { StyleSheet, View } from "react-native";
-import { useState } from "react";
+import { StyleSheet, View, ActivityIndicator } from "react-native";
+import { useEffect, useState } from "react";
 import { fetchCategories } from "../models/FakeStoreData";
 import { useNavigation } from "@react-navigation/native";
 import { Title } from "../components/Title";
@@ -9,10 +9,14 @@ export const Category = () => {
 	const navigation = useNavigation();
 
 	const [categories, setCategories] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
 
-	fetchCategories().then((data) => {
-		setCategories(data);
-	});
+	useEffect(() => {
+		fetchCategories().then((data) => {
+			setCategories(data);
+			setIsLoading(false);
+		});
+	}, []);
 
 	const clickHandler = (category) => {
 		console.log(category);
@@ -26,7 +30,11 @@ export const Category = () => {
 			</View>
 
 			<View style={styles.bottom}>
-				<List data={categories} onPress={clickHandler} />
+				{isLoading ? (
+					<ActivityIndicator />
+				) : (
+					<List data={categories} onPress={clickHandler} />
+				)}
 			</View>
 		</View>
 	);
