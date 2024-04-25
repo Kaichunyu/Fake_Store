@@ -22,7 +22,7 @@ export default function App() {
 						tabBarLabel: "Home",
 						tabBarLabelStyle: { fontSize: 14, fontWeight: "bold" },
 						tabBarIcon: ({}) => (
-							<Ionicons name="home" size="30" color="black" />
+							<Ionicons name="home" size={30} color="black" />
 						),
 					}}
 				/>
@@ -35,7 +35,7 @@ export default function App() {
 						tabBarLabel: "Cart",
 						tabBarLabelStyle: { fontSize: 14, fontWeight: "bold" },
 						tabBarIcon: ({}) => (
-							<Ionicons name="cart" size="30" color="black" />
+							<Ionicons name="cart" size={30} color="black" />
 						),
 					}}
 				/>
