@@ -10,7 +10,6 @@ import store from "./src/store/Store";
 import { Provider } from "react-redux";
 import { useSelector } from "react-redux";
 
-
 const Tabs = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -32,7 +31,7 @@ export const TabStack = () => {
 					component={HomeStack}
 					options={{
 						headerShown: false,
-						tabBarLabel: "Home",
+						tabBarLabel: "Products",
 						tabBarLabelStyle: { fontSize: 14, fontWeight: "bold" },
 						tabBarIcon: ({}) => (
 							<Ionicons name="home" size={30} color="black" />
@@ -44,7 +43,7 @@ export const TabStack = () => {
 					component={ShoppingCart}
 					options={{
 						headerShown: false,
-						tabBarLabel: "Cart",
+						tabBarLabel: "Shopping Cart",
 						tabBarLabelStyle: { fontSize: 14, fontWeight: "bold" },
 						tabBarIcon: ({}) => (
 							<Ionicons name="cart" size={30} color="black" />

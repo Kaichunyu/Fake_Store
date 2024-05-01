@@ -6,32 +6,13 @@ import {
 	Pressable,
 	Image,
 } from "react-native";
-import { formatCategory } from "../models/FakeStoreData";
 
-export const List = ({ data, onPress }) => {
+export const ProductsList = ({ data, onPress }) => {
 	return (
-		<View>
 			<FlatList
 				data={data}
 				renderItem={({ item }) => (
 					<View style={styles.item}>
-						{item.name !== undefined ? (
-							<Pressable
-								style={({ pressed }) => [
-									styles.categoryButton,
-									{
-										opacity: pressed ? 0.5 : 1.0,
-									},
-								]}
-								onPress={() => {
-									onPress(item.name);
-								}}
-							>
-								<Text style={styles.categoryText}>
-									{formatCategory(item.name)}
-								</Text>
-							</Pressable>
-						) : (
 							<Pressable
 								style={({ pressed }) => [
 									styles.DetailButton,
@@ -51,12 +32,10 @@ export const List = ({ data, onPress }) => {
 									<Text style={styles.detail}>Price: ${item.price}</Text>
 								</View>
 							</Pressable>
-						)}
 					</View>
 				)}
 				keyExtractor={(item) => item.id}
 			/>
-		</View>
 	);
 };
 
@@ -67,18 +46,6 @@ const styles = StyleSheet.create({
 		borderWidth: 2,
 		minWidth: 300,
 		maxWidth: 350,
-	},
-
-	categoryText: {
-		flex: 0.5,
-		fontSize: 20,
-		fontWeight: "bold",
-		color: "black",
-		padding: 10,
-	},
-
-	categoryButton: {
-		alignItems: "center",
 	},
 
 	DetailButton: {

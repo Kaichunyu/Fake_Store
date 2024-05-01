@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { fetchCategories } from "../models/FakeStoreData";
 import { useNavigation } from "@react-navigation/native";
 import { Title } from "../components/Title";
-import { List } from "../components/List";
+import { CategoryList } from "../components/CategoryList";
 
 export const Category = () => {
 	const navigation = useNavigation();
@@ -31,9 +31,9 @@ export const Category = () => {
 
 			<View style={styles.bottom}>
 				{isLoading ? (
-					<ActivityIndicator />
+					<ActivityIndicator size="large" color="#0000ff" />
 				) : (
-					<List data={categories} onPress={clickHandler} />
+					<CategoryList data={categories} onPress={clickHandler} />
 				)}
 			</View>
 		</View>

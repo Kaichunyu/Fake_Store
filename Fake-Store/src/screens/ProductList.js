@@ -6,7 +6,7 @@ import { Title } from "../components/Title";
 import { ImageButton } from "../components/ImageButton";
 import { useRoute } from "@react-navigation/native";
 import { fetchProducts } from "../models/FakeStoreData";
-import { List } from "../components/List";
+import { ProductsList } from "../components/ProductsList";
 
 export const ProductList = () => {
 	const navigation = useNavigation();
@@ -40,9 +40,9 @@ export const ProductList = () => {
 
 			<View style={styles.middle}>
 				{isLoading ? (
-					<ActivityIndicator />
+					<ActivityIndicator size="large" color="#0000ff" />
 				) : (
-					<List data={products} onPress={clickHandler} />
+					<ProductsList data={products} onPress={clickHandler} />
 				)}
 			</View>
 
@@ -60,8 +60,8 @@ export const ProductList = () => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-    flexDirection: "column",
-    marginTop: 60,
+		flexDirection: "column",
+		marginTop: 60,
 	},
 	top: {
 		height: "8%",

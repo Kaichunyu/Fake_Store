@@ -48,7 +48,7 @@ export const ProductDetail = () => {
 
 			<View style={styles.bottom}>
 				{isLoading ? (
-					<ActivityIndicator />
+					<ActivityIndicator size="large" color="#0000ff" />
 				) : (
 					<ScrollView>
 						<Image style={styles.image} source={{ uri: product.image }} />

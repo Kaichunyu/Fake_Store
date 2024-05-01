@@ -30,7 +30,11 @@ export const ShoppingCart = () => {
 				<Title title="Shopping Cart" />
 			</View>
 			<View style={styles.bottom}>
-				{cart.length > 0 ? (
+				{totalQuantity == 0 ? (
+					<View style={styles.content}>
+						<Text style={styles.emptyText}>Your shopping cart is empty!</Text>
+					</View>
+				) : (
 					<View style={styles.content}>
 						<View style={styles.status}>
 							<Text style={styles.statusText}>
@@ -75,7 +79,6 @@ export const ShoppingCart = () => {
 												]}
 												onPress={() => {
 													dispatch(incrementQuantity(item));
-													console.log(cart);
 												}}
 											>
 												<Text style={styles.buttonText}> + </Text>
@@ -85,10 +88,6 @@ export const ShoppingCart = () => {
 								</View>
 							)}
 						/>
-					</View>
-				) : (
-					<View style={styles.content}>
-						<Text style={styles.emptyText}>This is empty!</Text>
 					</View>
 				)}
 			</View>
@@ -116,6 +115,10 @@ const styles = StyleSheet.create({
 	content: {
 		alignSelf: "center",
 	},
+	emptyText: {
+		fontSize: 25,
+		fontWeight: "bold",
+	},
 	status: {
 		flexDirection: "row",
 		justifyContent: "space-around",
@@ -123,7 +126,7 @@ const styles = StyleSheet.create({
 		height: 50,
 		borderWidth: 1,
 		borderRadius: 10,
-		backgroundColor: "#8F94FB",
+    backgroundColor: "#8F94FB",
 	},
 
 	statusText: {
@@ -131,10 +134,7 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		alignSelf: "center",
 	},
-	emptyText: {
-		fontSize: 30,
-		fontWeight: "bold",
-	},
+
 	item: {
 		backgroundColor: "#8F94FB",
 		margin: 10,
