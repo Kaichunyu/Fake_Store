@@ -12,6 +12,14 @@ import { useNavigation } from "@react-navigation/native";
 import { Title } from "../components/Title";
 import { useRoute } from "@react-navigation/native";
 import { ImageButton } from "../components/ImageButton";
+import { useSelector, useDispatch } from "react-redux";
+import {
+	addToCart,
+	removeFromCart,
+	incrementQuantity,
+	decrementQuantity,
+	selectCount,
+} from "../store/CartSlice";
 
 export const ProductDetail = () => {
 	const navigation = useNavigation();
@@ -32,6 +40,13 @@ export const ProductDetail = () => {
 		});
 	}, []);
 
+
+	const cart = useSelector((state) => state.cart.cart);
+	const dispatch = useDispatch();
+	const addItemToCartHandler = () => {
+		console.log(cart);
+		dispatch(addToCart(product));
+	};
 	return (
 		<View style={styles.container}>
 			<View style={styles.top}>
@@ -63,7 +78,7 @@ export const ProductDetail = () => {
 							<ImageButton
 								iconname="cart"
 								buttonname="Add to Cart"
-								action={gobackHandler}
+								action={addItemToCartHandler}
 							/>
 						</View>
 
