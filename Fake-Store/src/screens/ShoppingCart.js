@@ -8,21 +8,21 @@ import {
 } from "react-native";
 import { Title } from "../components/Title";
 import { useSelector, useDispatch } from "react-redux";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { useState } from "react";
+import { useEffect } from "react";
 import {
-	increment,
-	decrement,
-	incrementByValue,
-	incrementAsync,
-	selectCount,
+	incrementQuantity,
+	decrementQuantity,
+	calculateTotals,
 } from "../store/CartSlice";
-import { List } from "../components/List";
-import { ImageButton } from "../components/ImageButton";
 
 export const ShoppingCart = () => {
 	const cart = useSelector((state) => state.cart.cart);
+	const totalPrice = useSelector((state) => state.cart.totalPrice);
+	const totalQuantity = useSelector((state) => state.cart.totalQuantity);
 	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(calculateTotals());
+	}, [cart]);
 
 	return (
 		<View style={styles.container}>
@@ -33,8 +33,12 @@ export const ShoppingCart = () => {
 				{cart.length > 0 ? (
 					<View style={styles.content}>
 						<View style={styles.status}>
-							<Text style={styles.statusText}>Total items: {}</Text>
-							<Text style={styles.statusText}>Total Price: $1234</Text>
+							<Text style={styles.statusText}>
+								Total items: {totalQuantity}
+							</Text>
+							<Text style={styles.statusText}>
+								Total Price: ${totalPrice.toFixed(2)}
+							</Text>
 						</View>
 						<FlatList
 							data={cart}
@@ -53,10 +57,15 @@ export const ShoppingCart = () => {
 														opacity: pressed ? 0.5 : 1.0,
 													},
 												]}
+												onPress={() => {
+													dispatch(decrementQuantity(item));
+												}}
 											>
 												<Text style={styles.buttonText}>-</Text>
 											</Pressable>
-											<Text style={styles.detail}>Quantity : {item.quantity}</Text>
+											<Text style={styles.detail}>
+												Quantity : {item.quantity}
+											</Text>
 											<Pressable
 												style={({ pressed }) => [
 													styles.button,
@@ -64,6 +73,10 @@ export const ShoppingCart = () => {
 														opacity: pressed ? 0.5 : 1.0,
 													},
 												]}
+												onPress={() => {
+													dispatch(incrementQuantity(item));
+													console.log(cart);
+												}}
 											>
 												<Text style={styles.buttonText}> + </Text>
 											</Pressable>
@@ -130,7 +143,6 @@ const styles = StyleSheet.create({
 		width: 380,
 		height: 150,
 		flexDirection: "row",
-		// justifyContent: 'center',
 		alignItems: "center",
 	},
 

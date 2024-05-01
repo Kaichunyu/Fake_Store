@@ -13,13 +13,7 @@ import { Title } from "../components/Title";
 import { useRoute } from "@react-navigation/native";
 import { ImageButton } from "../components/ImageButton";
 import { useSelector, useDispatch } from "react-redux";
-import {
-	addToCart,
-	removeFromCart,
-	incrementQuantity,
-	decrementQuantity,
-	selectCount,
-} from "../store/CartSlice";
+import { addToCart } from "../store/CartSlice";
 
 export const ProductDetail = () => {
 	const navigation = useNavigation();
@@ -39,7 +33,6 @@ export const ProductDetail = () => {
 			setIsLoading(false);
 		});
 	}, []);
-
 
 	const cart = useSelector((state) => state.cart.cart);
 	const dispatch = useDispatch();

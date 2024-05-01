@@ -8,14 +8,8 @@ import { ShoppingCart } from "./src/screens/ShoppingCart";
 import { Ionicons } from "@expo/vector-icons";
 import store from "./src/store/Store";
 import { Provider } from "react-redux";
-import { useSelector, useDispatch } from "react-redux";
-import {
-	increment,
-	decrement,
-	incrementByValue,
-	incrementAsync,
-	selectCount,
-} from "./src/store/CartSlice";
+import { useSelector } from "react-redux";
+
 
 const Tabs = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -29,7 +23,7 @@ export default function App() {
 }
 
 export const TabStack = () => {
-	// const count = useSelector(selectCount);
+	const totalQuantity = useSelector((state) => state.cart.totalQuantity);
 	return (
 		<NavigationContainer>
 			<Tabs.Navigator>
@@ -55,7 +49,7 @@ export const TabStack = () => {
 						tabBarIcon: ({}) => (
 							<Ionicons name="cart" size={30} color="black" />
 						),
-						// tabBarBadge: count,
+						tabBarBadge: totalQuantity,
 					}}
 				/>
 			</Tabs.Navigator>
