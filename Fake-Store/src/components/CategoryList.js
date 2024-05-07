@@ -5,7 +5,7 @@ import {
 	StyleSheet,
 	Pressable,
 } from "react-native";
-import { formatCategory } from "../models/FakeStoreData";
+import { formatCategory } from "../service/apiService";
 
 export const CategoryList = ({ data, onPress }) => {
 	return (

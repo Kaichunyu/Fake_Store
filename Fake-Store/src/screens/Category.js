@@ -1,6 +1,6 @@
 import { StyleSheet, View, ActivityIndicator } from "react-native";
 import { useEffect, useState } from "react";
-import { fetchCategories } from "../models/FakeStoreData";
+import { fetchCategories } from "../service/apiService";
 import { useNavigation } from "@react-navigation/native";
 import { Title } from "../components/Title";
 import { CategoryList } from "../components/CategoryList";

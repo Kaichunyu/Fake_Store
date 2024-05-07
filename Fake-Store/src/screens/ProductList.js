@@ -1,11 +1,10 @@
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { useEffect, useState } from "react";
-import { formatCategory } from "../models/FakeStoreData";
 import { useNavigation } from "@react-navigation/native";
 import { Title } from "../components/Title";
 import { ImageButton } from "../components/ImageButton";
 import { useRoute } from "@react-navigation/native";
-import { fetchProducts } from "../models/FakeStoreData";
+import { formatCategory, fetchProductByCat } from "../service/apiService";
 import { ProductsList } from "../components/ProductsList";
 
 export const ProductList = () => {
@@ -21,7 +20,7 @@ export const ProductList = () => {
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		fetchProducts(category).then((data) => {
+		fetchProductByCat(category).then((data) => {
 			setProducts(data);
 			setIsLoading(false);
 		});

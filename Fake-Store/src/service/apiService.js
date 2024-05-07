@@ -24,37 +24,16 @@ export async function fetchCategories() {
   } 
 };
 
-export async function fetchProducts(category) {
-	try {
-		const response = await fetch(url + "category/" + category);
-		if (!response.ok) {
-			throw new Error("Failed to fetch products");
-		}
-		const products = await response.json();
+export const fetchProductByCat = async (category) => {
+  try {
+    const res = await fetch(url + "category/" + category);
+    const data = await res.json();
+    return data;
+  } catch (e) {
+    throw new Error("Can't find category.");
+} };
 
-		const filteredProducts = products.filter(
-			(product) =>
-				product.category === category
-		);
-
-		const formattedProducts = filteredProducts.map((product) => ({
-			id: product.id,
-			title: product.title,
-      price: product.price,
-      description: product.description,
-      image: product.image,
-      rate: product.rating.rate,
-      rateCount: product.rating.count,
-
-		}));
-		return formattedProducts;
-	} catch (error) {
-		console.error("Error fetching products:", error.message);
-		return [];
-	}
-}
-
-export async function fetchProduct(id) {
+export async function fetchProductByID(id) {
 	try {
 		const response = await fetch(url + id);
 		if (!response.ok) {

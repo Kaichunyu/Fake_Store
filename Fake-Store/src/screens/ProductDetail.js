@@ -7,7 +7,7 @@ import {
 	ActivityIndicator,
 } from "react-native";
 import { useState, useEffect } from "react";
-import { fetchProduct } from "../models/FakeStoreData";
+import { fetchProductByID } from "../service/apiService";
 import { useNavigation } from "@react-navigation/native";
 import { Title } from "../components/Title";
 import { useRoute } from "@react-navigation/native";
@@ -28,7 +28,7 @@ export const ProductDetail = () => {
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		fetchProduct(id).then((data) => {
+		fetchProductByID(id).then((data) => {
 			setProduct(data);
 			setIsLoading(false);
 		});

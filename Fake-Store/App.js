@@ -28,7 +28,7 @@ export const TabStack = () => {
 			<Tabs.Navigator>
 				<Tabs.Screen
 					name="Home"
-					component={HomeStack}
+					component={ProductStack}
 					options={{
 						headerShown: false,
 						tabBarLabel: "Products",
@@ -56,7 +56,7 @@ export const TabStack = () => {
 	);
 };
 
-export const HomeStack = () => {
+export const ProductStack = () => {
 	return (
 		<Stack.Navigator initialRouteName="Category">
 			<Stack.Screen

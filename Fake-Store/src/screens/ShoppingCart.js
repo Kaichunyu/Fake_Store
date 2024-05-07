@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
 		height: 50,
 		borderWidth: 1,
 		borderRadius: 10,
-    backgroundColor: "#8F94FB",
+		backgroundColor: "#8F94FB",
 	},
 
 	statusText: {
