@@ -28,5 +28,6 @@ const styles = StyleSheet.create({
     minWidth: 130,
     flexDirection: "row",
 		justifyContent: "space-around",
+		borderWidth: 2,
 	},
 });

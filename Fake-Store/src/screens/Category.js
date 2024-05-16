@@ -1,4 +1,4 @@
-import { StyleSheet, View, ActivityIndicator } from "react-native";
+import { StyleSheet, View, ActivityIndicator, Text } from "react-native";
 import { useEffect, useState } from "react";
 import { fetchCategories } from "../service/apiService";
 import { useNavigation } from "@react-navigation/native";
@@ -35,6 +35,7 @@ export const Category = () => {
 				) : (
 					<CategoryList data={categories} onPress={clickHandler} />
 				)}
+				<Text>App developed by Kai Chun Yu</Text>
 			</View>
 		</View>
 	);

@@ -50,7 +50,7 @@ export const ProductDetail = () => {
 				{isLoading ? (
 					<ActivityIndicator size="large" color="#0000ff" />
 				) : (
-					<ScrollView>
+					<View>
 						<Image style={styles.image} source={{ uri: product.image }} />
 						<Text style={styles.title}>{product.title}</Text>
 						<View style={styles.details}>
@@ -58,7 +58,7 @@ export const ProductDetail = () => {
 								Rate: {product.rating.rate}
 							</Text>
 							<Text style={styles.detailsText}>
-								Sold: {product.rating.count}
+								Count: {product.rating.count}
 							</Text>
 							<Text style={styles.detailsText}>Price: ${product.price}</Text>
 						</View>
@@ -76,10 +76,10 @@ export const ProductDetail = () => {
 						</View>
 
 						<Text style={styles.detailsText}>Description: </Text>
-						<View style={styles.descriptionContainer}>
+						<ScrollView style={styles.descriptionContainer}>
 							<Text style={styles.descriptionText}> {product.description}</Text>
-						</View>
-					</ScrollView>
+						</ScrollView>
+					</View>
 				)}
 			</View>
 		</View>
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
 	descriptionContainer: {
 		backgroundColor: "lightgrey",
 		width: 360,
-		minheight: 100,
+		// maxheight: 90,
 		borderWidth: 2,
 		borderRadius: 10,
 	},

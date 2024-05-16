@@ -14,6 +14,7 @@ import {
 	decrementQuantity,
 	calculateTotals,
 } from "../store/CartSlice";
+import { ImageButton } from "../components/ImageButton";
 
 export const ShoppingCart = () => {
 	const cart = useSelector((state) => state.cart.cart);
@@ -24,6 +25,10 @@ export const ShoppingCart = () => {
 		dispatch(calculateTotals());
 	}, [cart]);
 
+	const checkOutHander = () => {
+		console.log("checkout");
+	};
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.top}>
@@ -32,7 +37,7 @@ export const ShoppingCart = () => {
 			<View style={styles.bottom}>
 				{totalQuantity == 0 ? (
 					<View style={styles.content}>
-						<Text style={styles.emptyText}>Your shopping cart is empty!</Text>
+						<Text style={styles.emptyText}>Your Cart is Empty!</Text>
 					</View>
 				) : (
 					<View style={styles.content}>
@@ -88,6 +93,13 @@ export const ShoppingCart = () => {
 								</View>
 							)}
 						/>
+						<View style={styles.checkOutButton}>
+							<ImageButton
+								buttonname="Check Out"
+								iconname="bag-check"
+								action={checkOutHander}
+							/>
+						</View>
 					</View>
 				)}
 			</View>
@@ -189,5 +201,9 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		fontWeight: "700",
 		color: "white",
+	},
+	checkOutButton: {
+		width: 150,
+		alignSelf: "center",
 	},
 });
