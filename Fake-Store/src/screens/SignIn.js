@@ -1,23 +1,39 @@
-import { View, StyleSheet, Text, TextInput, Pressable } from "react-native";
+import {
+	View,
+	StyleSheet,
+	Text,
+	TextInput,
+	Pressable,
+	Alert,
+} from "react-native";
 import { useState } from "react";
 import { ImageButton } from "../components/ImageButton";
+import { useNavigation } from "@react-navigation/native";
+import { signinUser } from "../service/authService";
+import { useEffect } from "react";
 
 export const SignIn = () => {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
+	const navigation = useNavigation();
+
+	const [email, setEmail] = useState("kai@kai.com");
+	const [password, setPassword] = useState("Aa12345678");
 
 	const clearHander = () => {
 		setEmail("");
 		setPassword("");
 	};
 
-	const signInHander = () => {
-		console.log("sign In");
-  };
-  
-  const signUpHander = () => {
-    console.log("signUp")
-  }
+	const signInHander = async () => {
+		const res = await signinUser(email, password);
+		if (res.status === "error") {
+			Alert.alert(res.message);
+		}
+		console.log(res);
+	};
+
+	const signUpHander = () => {
+		navigation.navigate("SignUp");
+	};
 
 	return (
 		<View style={styles.contain}>
@@ -48,9 +64,17 @@ export const SignIn = () => {
 						action={signInHander}
 					/>
 				</View>
-				<View style={styles.signUp}>
-					<Pressable onPress={signUpHander}>
-						<Text style={styles.text}>Switch to: Sign up</Text>
+				<View style={styles.navigator}>
+					<Text style={styles.text}>Switch to:</Text>
+					<Pressable
+						style={({ pressed }) => [
+							{
+								opacity: pressed ? 0.5 : 1.0,
+							},
+						]}
+						onPress={signUpHander}
+					>
+						<Text style={styles.button}> Sign up</Text>
 					</Pressable>
 				</View>
 			</View>
@@ -98,8 +122,14 @@ const styles = StyleSheet.create({
 		padding: 8,
 		margin: 10,
 	},
-	signUp: {
+	navigator: {
 		justifyContent: "center",
 		alignItems: "center",
+		flexDirection: "row",
+		flex: 1,
+	},
+	button: {
+		color: "blue",
+		fontWeight: "bold",
 	},
 });

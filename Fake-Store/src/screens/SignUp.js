@@ -1,31 +1,46 @@
-import { View, StyleSheet, Text, TextInput, Pressable } from "react-native";
-import { useState } from "react";
+import {
+	View,
+	StyleSheet,
+	Text,
+	TextInput,
+	Pressable,
+	Alert,
+} from "react-native";
+import { useState, useEffect } from "react";
 import { ImageButton } from "../components/ImageButton";
+import { useNavigation } from "@react-navigation/native";
+import { signupUser } from "../service/authService";
 
 export const SignUp = () => {
-  const [userName, setUserName] = useState("")
+	const navigation = useNavigation();
+	const [userName, setUserName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
-  const clearHander = () => {
-    setUserName("")
+
+	const clearHander = () => {
+		setUserName("");
 		setEmail("");
 		setPassword("");
 	};
 
-	const signUpHander = () => {
-		console.log("sign Up");
-  };
-  
-  const signInHander = () => {
-    console.log("signIn")
-  }
+	const signUpHander = async () => {
+		const res = await signupUser(userName, email, password);
+		if (res.status === "error") {
+			Alert.alert(res.message);
+		}
+		console.log(res);
+	};
+
+	const signInHander = () => {
+		navigation.navigate("SignIn");
+	};
 
 	return (
 		<View style={styles.contain}>
 			<View style={styles.signInForm}>
-        <Text style={styles.title}>Sign up a new user</Text>
-        <Text style={styles.text}>User Name</Text>
+				<Text style={styles.title}>Sign Up a new user</Text>
+				<Text style={styles.text}>User Name</Text>
 				<TextInput
 					style={styles.inputBox}
 					value={userName}
@@ -56,9 +71,17 @@ export const SignUp = () => {
 						action={signUpHander}
 					/>
 				</View>
-				<View style={styles.signIn}>
-					<Pressable onPress={signInHander}>
-						<Text style={styles.text}>Switch to: Sign In</Text>
+				<View style={styles.navigator}>
+					<Text style={styles.text}>Switch to:</Text>
+					<Pressable
+						style={({ pressed }) => [
+							{
+								opacity: pressed ? 0.5 : 1.0,
+							},
+						]}
+						onPress={signInHander}
+					>
+						<Text style={styles.button}> Sign In</Text>
 					</Pressable>
 				</View>
 			</View>
@@ -106,8 +129,14 @@ const styles = StyleSheet.create({
 		padding: 8,
 		margin: 10,
 	},
-	signIn: {
+	navigator: {
 		justifyContent: "center",
 		alignItems: "center",
+		flexDirection: "row",
+		flex: 1,
+	},
+	button: {
+		color: "blue",
+		fontWeight: "bold",
 	},
 });

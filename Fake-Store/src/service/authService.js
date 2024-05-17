@@ -1,6 +1,6 @@
 import { server, port } from "./serverSetting"
 
-export const signupUser = async ({ name, email, password }) => {
+export const signupUser = async ( name, email, password ) => {
   const url = `${server}:${port}/users/signup`;
   const user = { name, email, password }
   try {
@@ -18,7 +18,7 @@ export const signupUser = async ({ name, email, password }) => {
   }
 }
 
-export const signinUser = async ({ email, password }) => {
+export const signinUser = async ( email, password ) => {
   const url = `${server}:${port}/users/signin`;
   const user = { email, password }
   try {
@@ -30,13 +30,14 @@ export const signinUser = async ({ email, password }) => {
       },
       body: JSON.stringify(user),
     });
-    return await res.json();
+    const data = await res.json()
+    return data;
   } catch (error) {
     throw new Error("Failed to sign in user: " + error);
   }
 }
 
-export const updateUserProfile = async ({ token, name, password }) => {
+export const updateUserProfile = async ( token, name, password ) => {
   const url = `${server}:${port}/users/update`;
   const user = { name, password }
   try {
