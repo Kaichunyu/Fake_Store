@@ -1,43 +1,68 @@
 import { View, StyleSheet, Text, TextInput, Alert } from "react-native";
 import { Title } from "../components/Title";
 import { ImageButton } from "../components/ImageButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { updateUserProfile } from "../service/authService";
+import { useSelector, useDispatch } from "react-redux";
+import { logOut, updateName } from "../store/AuthSlice";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { clearCart } from "../store/CartSlice";
+import { clearOrder } from "../store/OrderSlice";
 
 export const UserProfile = () => {
-	const [newUserName, setNewUserName] = useState("");
-	const [newPassword, setNewPassword] = useState("");
-	const [update, setUpdate] = useState(false);
+	const [onUpdate, setOnUpdate] = useState(false);
+	const userInfo = useSelector((state) => state.auth.userInfo);
+	const orders = useSelector((state) => state.order.order);
+	const cart = useSelector((state)=> state.cart.cart)
+	const [userName, setUserName] = useState(userInfo.name);
+	const [password, setPassword] = useState(userInfo.password);
+	const isFocused = useIsFocused();
 
-	const token = "a";
-	// "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEwLCJpYXQiOjE3MTU5MTkxODgsImV4cCI6MTcxNTkyMjc4OH0.WsotQB9HHt9REBIMA-sy5Tk8wY5jNyA7GHOwnowWfhY";
+	const navigation = useNavigation();
+
+	useEffect(() => {
+		if (userInfo.name === undefined) {
+			navigation.navigate("SignIn");
+		}
+	}, [isFocused]);
+
+	const dispatch = useDispatch();
 
 	const updateHandler = () => {
-		setUpdate(!update);
+		setOnUpdate(!onUpdate);
 	};
 
-	const signOutHandler = () => {};
+	const signOutHandler = () => {
+		dispatch(logOut());
+		dispatch(clearCart());
+		dispatch(clearOrder());
+		navigation.navigate("SignIn");
+	};
 
 	const confirmHandler = async () => {
-		const res = await updateUserProfile(token, newUserName, newPassword);
+		const res = await updateUserProfile(userInfo.token, userName, password);
 		if (res.status === "error") {
-			Alert.alert(res.message);
+			return;
 		} else {
-			console.log(res);
-			setUpdate(!update);
+			dispatch(updateName(res));
+			setOnUpdate(!onUpdate);
 		}
+		console.log(res);
+		Alert.alert(res.message);
 	};
 
 	const cancelHandler = () => {
-		setUpdate(!update);
+		setOnUpdate(!onUpdate);
 	};
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.top}>
+				{ console.log(userInfo, orders, cart)}
 				<Title title="User Profile" />
 			</View>
 			<View style={styles.bottom}>
-				{update === false ? (
+				{onUpdate === false ? (
 					<View>
 						<View style={styles.detailsContainer}>
 							<View>
@@ -45,10 +70,8 @@ export const UserProfile = () => {
 								<Text style={styles.column}>Email:</Text>
 							</View>
 							<View>
-								<Text style={styles.details}>kai</Text>
-								<Text style={styles.details}>
-									kaichun.yu@griffithuni.edu.au
-								</Text>
+								<Text style={styles.details}>{userInfo.name}</Text>
+								<Text style={styles.details}>{userInfo.email}</Text>
 							</View>
 						</View>
 
@@ -73,14 +96,14 @@ export const UserProfile = () => {
 							<Text style={styles.text}>New Username</Text>
 							<TextInput
 								style={styles.inputBox}
-								value={newUserName}
-								onChangeText={setNewUserName}
+								value={userName}
+								onChangeText={setUserName}
 							/>
 							<Text style={styles.text}>New Password</Text>
 							<TextInput
 								style={styles.inputBox}
-								value={newPassword}
-								onChangeText={setNewPassword}
+								value={password}
+								onChangeText={setPassword}
 								secureTextEntry={true}
 							/>
 							<View style={styles.buttonPanel}>

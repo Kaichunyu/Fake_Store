@@ -10,6 +10,8 @@ import { useState, useEffect } from "react";
 import { ImageButton } from "../components/ImageButton";
 import { useNavigation } from "@react-navigation/native";
 import { signupUser } from "../service/authService";
+import { useDispatch } from "react-redux";
+import { logIn } from "../store/AuthSlice";
 
 export const SignUp = () => {
 	const navigation = useNavigation();
@@ -17,6 +19,7 @@ export const SignUp = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
+	const dispatch = useDispatch();
 
 	const clearHander = () => {
 		setUserName("");
@@ -28,16 +31,20 @@ export const SignUp = () => {
 		const res = await signupUser(userName, email, password);
 		if (res.status === "error") {
 			Alert.alert(res.message);
+		} else {
+			dispatch(logIn(res));
+			navigation.navigate("User")
 		}
+
 		console.log(res);
 	};
 
-	const signInHander = () => {
+	const goToSignInHander = () => {
 		navigation.navigate("SignIn");
 	};
 
 	return (
-		<View style={styles.contain}>
+		<View style={styles.container}>
 			<View style={styles.signInForm}>
 				<Text style={styles.title}>Sign Up a new user</Text>
 				<Text style={styles.text}>User Name</Text>
@@ -79,7 +86,7 @@ export const SignUp = () => {
 								opacity: pressed ? 0.5 : 1.0,
 							},
 						]}
-						onPress={signInHander}
+						onPress={goToSignInHander}
 					>
 						<Text style={styles.button}> Sign In</Text>
 					</Pressable>
@@ -90,7 +97,7 @@ export const SignUp = () => {
 };
 
 const styles = StyleSheet.create({
-	contain: {
+	container: {
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",

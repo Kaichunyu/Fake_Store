@@ -11,12 +11,36 @@ import { ImageButton } from "../components/ImageButton";
 import { useNavigation } from "@react-navigation/native";
 import { signinUser } from "../service/authService";
 import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { logIn } from "../store/AuthSlice";
+import { fillOrder } from "../store/OrderSlice";
+import { fetchOrder } from "../service/orderService";
+import { fetchCart } from "../service/cartService";
+import { fillCart } from "../store/CartSlice";
 
 export const SignIn = () => {
 	const navigation = useNavigation();
 
 	const [email, setEmail] = useState("kai@kai.com");
-	const [password, setPassword] = useState("Aa12345678");
+	const [password, setPassword] = useState("123");
+
+	const dispatch = useDispatch();
+	const userInfo = useSelector((state) => state.auth.userInfo);
+
+	useEffect(() => {
+		const fetchOrders = async () => {
+			const orderRes = await fetchOrder(userInfo.token);
+			dispatch(fillOrder(orderRes.orders[0]));
+		};
+		const fetchCartItems = async () => {
+			const cartRes = await fetchCart(userInfo.token);
+			dispatch(fillCart(cartRes.items));
+		};
+		if (userInfo.token) {
+			fetchOrders();
+			fetchCartItems();
+		}
+	}, [userInfo]);
 
 	const clearHander = () => {
 		setEmail("");
@@ -28,15 +52,16 @@ export const SignIn = () => {
 		if (res.status === "error") {
 			Alert.alert(res.message);
 		}
-		console.log(res);
+		dispatch(logIn(res));
+		navigation.navigate("User");
 	};
 
-	const signUpHander = () => {
+	const goToSignUpHander = () => {
 		navigation.navigate("SignUp");
 	};
 
 	return (
-		<View style={styles.contain}>
+		<View style={styles.container}>
 			<View style={styles.signInForm}>
 				<Text style={styles.title}>Sign In with your email and password</Text>
 				<Text style={styles.text}>Email</Text>
@@ -72,7 +97,7 @@ export const SignIn = () => {
 								opacity: pressed ? 0.5 : 1.0,
 							},
 						]}
-						onPress={signUpHander}
+						onPress={goToSignUpHander}
 					>
 						<Text style={styles.button}> Sign up</Text>
 					</Pressable>
@@ -83,7 +108,7 @@ export const SignIn = () => {
 };
 
 const styles = StyleSheet.create({
-	contain: {
+	container: {
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
@@ -93,7 +118,6 @@ const styles = StyleSheet.create({
 		width: 400,
 		height: 320,
 		borderRadius: 10,
-		// padding: 10,
 	},
 
 	title: {

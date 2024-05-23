@@ -8,25 +8,31 @@ import {
 } from "react-native";
 import { Title } from "../components/Title";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
 	incrementQuantity,
 	decrementQuantity,
 	calculateTotals,
 } from "../store/CartSlice";
 import { ImageButton } from "../components/ImageButton";
+import { fetchCart, addCart, updateCart } from "../service/cartService";
 
 export const ShoppingCart = () => {
+	const token = useSelector((state) => state.auth.userInfo.token)
+
 	const cart = useSelector((state) => state.cart.cart);
 	const totalPrice = useSelector((state) => state.cart.totalPrice);
 	const totalQuantity = useSelector((state) => state.cart.totalQuantity);
 	const dispatch = useDispatch();
-	useEffect(() => {
-		dispatch(calculateTotals());
-	}, [cart]);
+	// useEffect(() => {
+	// 			dispatch(calculateTotals());
+	// 	updateCart(token, cart)
+	// }, [cart]);
 
-	const checkOutHander = () => {
+	const checkOutHander = async () => {
 		console.log("checkout");
+		// const res = await updateCart(token, cart)
+		// console.log(res)
 	};
 
 	return (

@@ -1,20 +1,24 @@
 import { View, StyleSheet, Text, Pressable } from "react-native";
 import { Title } from "../components/Title";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useSelector } from "react-redux";
 
 export const MyOrders = () => {
+	const token = useSelector((state) => state.auth.userInfo.token);
+	const orders = useSelector((state) => state.order.order);
+
+	const newOrderHandler = () => {
+		console.log(orders);
+	};
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.top}>
+				{console.log(orders)}
 				<Title title="My Orders" />
 			</View>
 			<View style={styles.bottom}>
-				<Pressable
-					style={styles.button}
-					onPress={() => {
-						console.log("orders clicked");
-					}}
-				>
+				<Pressable style={styles.button} onPress={newOrderHandler}>
 					<View style={styles.buttonContent}>
 						<Text style={styles.buttonText}>New Orders: 0</Text>
 						<Ionicons
@@ -32,7 +36,9 @@ export const MyOrders = () => {
 					}}
 				>
 					<View style={styles.buttonContent}>
-						<Text style={styles.buttonText}>Paid Orders: 0</Text>
+						<Text style={styles.buttonText}>
+							Paid Orders: {orders === undefined ? 0: orders.length === 0 ? 0: orders.is_paid}
+						</Text>
 						<Ionicons
 							style={styles.arrowicon}
 							name="caret-down"
@@ -47,7 +53,10 @@ export const MyOrders = () => {
 					}}
 				>
 					<View style={styles.buttonContent}>
-						<Text style={styles.buttonText}>Delivered Orders: 0</Text>
+						<Text style={styles.buttonText}>
+							Delivered Orders:
+							{orders === undefined ? 0: orders.length === 0 ? 0: orders.is_delivered}
+						</Text>
 						<Ionicons
 							style={styles.arrowicon}
 							name="caret-down"
@@ -88,14 +97,14 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		flexDirection: "row",
 		flex: 1,
-    margin: 10,
+		margin: 10,
 	},
 	buttonText: {
 		fontSize: 20,
-    fontWeight: "bold",
+		fontWeight: "bold",
 	},
 	arrowicon: {
 		color: "green",
-    fontSize: 25,
+		fontSize: 25,
 	},
 });
