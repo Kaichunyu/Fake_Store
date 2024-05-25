@@ -58,7 +58,7 @@ export const UserProfile = () => {
 	return (
 		<View style={styles.container}>
 			<View style={styles.top}>
-				{ console.log(userInfo, orders, cart)}
+				{/* { console.log(userInfo, orders, cart)} */}
 				<Title title="User Profile" />
 			</View>
 			<View style={styles.bottom}>

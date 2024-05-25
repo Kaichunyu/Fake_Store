@@ -13,26 +13,34 @@ import {
 	incrementQuantity,
 	decrementQuantity,
 	calculateTotals,
+	clearCart,
 } from "../store/CartSlice";
 import { ImageButton } from "../components/ImageButton";
-import { fetchCart, addCart, updateCart } from "../service/cartService";
+import { newOrder, fetchOrder, updateOrder } from "../service/orderService";
+import { fillOrder, addOrder } from "../store/OrderSlice";
 
 export const ShoppingCart = () => {
-	const token = useSelector((state) => state.auth.userInfo.token)
-
-	const cart = useSelector((state) => state.cart.cart);
+	const token = useSelector((state) => state.auth.userInfo.token);
+	const cart = useSelector((state) => state.cart);
 	const totalPrice = useSelector((state) => state.cart.totalPrice);
 	const totalQuantity = useSelector((state) => state.cart.totalQuantity);
 	const dispatch = useDispatch();
-	// useEffect(() => {
-	// 			dispatch(calculateTotals());
-	// 	updateCart(token, cart)
-	// }, [cart]);
 
 	const checkOutHander = async () => {
 		console.log("checkout");
-		// const res = await updateCart(token, cart)
-		// console.log(res)
+		const res = await newOrder(token, cart.cart);
+		if (res.status === "error") {
+			Alert.alert(res.message);
+		} else {
+			dispatch(clearCart());
+			const fetchOrders = async () => {
+				const orderRes = await fetchOrder(token);
+				dispatch(fillOrder(orderRes.orders));
+			};
+			fetchOrders();
+		}
+
+		console.log(res);
 	};
 
 	return (
@@ -56,7 +64,7 @@ export const ShoppingCart = () => {
 							</Text>
 						</View>
 						<FlatList
-							data={cart}
+							data={cart.cart}
 							keyExtractor={(item) => item.id}
 							renderItem={({ item }) => (
 								<View style={styles.item}>

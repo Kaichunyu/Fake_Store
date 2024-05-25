@@ -19,6 +19,7 @@ import { Alert } from "react-native";
 import { useDispatch } from "react-redux";
 import { calculateTotals } from "./src/store/CartSlice";
 import { updateCart } from "./src/service/cartService";
+import { calculateOrderTotals } from "./src/store/OrderSlice";
 const Tabs = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -35,14 +36,16 @@ export default function App() {
 export const TabStack = () => {
 	const dispatch = useDispatch();
 	const cart = useSelector((state) => state.cart.cart);
+	const order = useSelector((state)=> state.order.order)
 	const token = useSelector((state) => state.auth.userInfo.token);
 	useEffect(() => {
 		dispatch(calculateTotals());
+		dispatch(calculateOrderTotals());
 		updateCart(token, cart);
-	}, [cart]);
+	}, [cart, order]);
 
 	const totalQuantity = useSelector((state) => state.cart.totalQuantity);
-	const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+	const orderBadge = useSelector((state)=> state.order.myOrders[0].totalQty)
 	const authGuard = (name, { navigation }) => ({
 		tabPress: (e) => {
 			e.preventDefault();
@@ -88,7 +91,7 @@ export const TabStack = () => {
 					tabBarIcon: ({}) => (
 						<Ionicons name="receipt" size={30} color="black" />
 					),
-					// tabBarBadge: totalQuantity > 0 ? totalQuantity : null,
+					tabBarBadge: orderBadge > 0 ? orderBadge : null,
 				}}
 				listeners={authGuard.bind(null, "MyOrders")}
 			/>
@@ -104,22 +107,6 @@ export const TabStack = () => {
 					),
 				}}
 			/>
-			{/* <Tabs.Screen
-				name="SignUp"
-				component={SignUp}
-				options={{
-					headerShown: false,
-					tabBarButton: () => null,
-				}}
-			/>
-			<Tabs.Screen
-				name="SignIn"
-				component={SignIn}
-				options={{
-					headerShown: false,
-					tabBarButton: () => null,
-				}}
-			/> */}
 		</Tabs.Navigator>
 	);
 };

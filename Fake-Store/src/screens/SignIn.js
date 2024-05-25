@@ -30,7 +30,7 @@ export const SignIn = () => {
 	useEffect(() => {
 		const fetchOrders = async () => {
 			const orderRes = await fetchOrder(userInfo.token);
-			dispatch(fillOrder(orderRes.orders[0]));
+			dispatch(fillOrder(orderRes.orders));
 		};
 		const fetchCartItems = async () => {
 			const cartRes = await fetchCart(userInfo.token);
@@ -41,6 +41,12 @@ export const SignIn = () => {
 			fetchCartItems();
 		}
 	}, [userInfo]);
+
+	useEffect(() => {
+		if (userInfo.token) {
+			navigation.navigate("User");
+		}
+	},[])
 
 	const clearHander = () => {
 		setEmail("");

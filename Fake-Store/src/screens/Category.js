@@ -4,7 +4,6 @@ import { fetchCategories } from "../service/apiService";
 import { useNavigation } from "@react-navigation/native";
 import { Title } from "../components/Title";
 import { CategoryList } from "../components/CategoryList";
-import { useSelector } from "react-redux";
 
 export const Category = () => {
 	const navigation = useNavigation();
@@ -24,9 +23,6 @@ export const Category = () => {
 		navigation.navigate("ProductList", { category: category });
 	};
 
-	const cart = useSelector((state) => state.cart.cart)
-	const user = useSelector((state) => state.auth.userInfo)
-	const order = useSelector((state)=> state.order.order)
 
 	return (
 		<View style={styles.container}>
