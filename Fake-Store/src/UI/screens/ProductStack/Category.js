@@ -1,9 +1,9 @@
 import { StyleSheet, View, ActivityIndicator, Text } from "react-native";
 import { useEffect, useState } from "react";
-import { fetchCategories } from "../service/apiService";
+import { fetchCategories } from "../../../service/fakeStoreAPIService";
 import { useNavigation } from "@react-navigation/native";
-import { Title } from "../components/Title";
-import { CategoryList } from "../components/CategoryList";
+import { Title } from "../../components/Title";
+import { CategoryList } from "../../components/Product/ProductCategoryList";
 
 export const Category = () => {
 	const navigation = useNavigation();
@@ -23,11 +23,10 @@ export const Category = () => {
 		navigation.navigate("ProductList", { category: category });
 	};
 
-
 	return (
 		<View style={styles.container}>
 			<View style={styles.top}>
-				<Title title="Category" />
+				<Title title="Product Categories" />
 			</View>
 
 			<View style={styles.bottom}>
@@ -52,15 +51,12 @@ const styles = StyleSheet.create({
 		height: "8%",
 		alignItems: "center",
 		justifyContent: "center",
-		marginBottom: 10,
 	},
 	bottom: {
 		height: "82%",
 		alignItems: "center",
 		justifyContent: "center",
-		borderColor: "black",
-		borderWidth: 2,
-		marginHorizontal: 40,
+		marginTop: 10,
 		padding: 10,
 	},
 });

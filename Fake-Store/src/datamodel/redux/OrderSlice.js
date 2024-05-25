@@ -72,8 +72,6 @@ export const orderSlice = createSlice({
 		},
 
 		expandOrder: (state, action) => {
-			// state.myOrders.find((item) => item.id == action.payload)
-
 			state.myOrders.forEach((category) => {
 				category.orders.forEach((order) => {
 					if (order.id === action.payload) {
@@ -81,7 +79,8 @@ export const orderSlice = createSlice({
 					}
 				});
 			});
-		},
+    },
+    
 	},
 });
 

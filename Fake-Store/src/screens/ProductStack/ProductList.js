@@ -1,11 +1,14 @@
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Title } from "../components/Title";
-import { ImageButton } from "../components/ImageButton";
+import { Title } from "../../UI/components/Title";
+import { ImageButton } from "../../UI/components/ImageButton";
 import { useRoute } from "@react-navigation/native";
-import { formatCategory, fetchProductByCat } from "../service/apiService";
-import { ProductsList } from "../components/ProductsList";
+import {
+	formatCategory,
+	fetchProductByCat,
+} from "../../../service/fakeStoreAPIService";
+import { ProductsList } from "../../UI/components/Product/ProductsList";
 
 export const ProductList = () => {
 	const navigation = useNavigation();
