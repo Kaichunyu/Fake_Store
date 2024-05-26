@@ -49,7 +49,7 @@ export const ShoppingCart = () => {
 							<ImageButton
 								buttonname="Check Out"
 								iconname="bag-check"
-								action={checkOutHander}
+									action={checkOutHander}
 							/>
 						</View>
 					</View>

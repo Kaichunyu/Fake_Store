@@ -12,11 +12,13 @@ import { UpdateForm } from "../../components/User/Form/UpdateForm";
 import { UserDetails } from "../../components/User/UserDetails";
 
 export const UserProfile = () => {
-	const [onUpdate, setOnUpdate] = useState(false);
 	const userInfo = useSelector((state) => state.auth.userInfo);
 	const isFocused = useIsFocused();
 	const navigation = useNavigation();
 	const dispatch = useDispatch();
+	const [onUpdate, setOnUpdate] = useState(false);
+	const [userName, setUserName] = useState(userInfo.name);
+	const [password, setPassword] = useState("");
 
 	useEffect(() => {
 		if (userInfo.name === undefined) {
@@ -79,7 +81,14 @@ export const UserProfile = () => {
 					</View>
 				) : (
 					<View style={styles.content}>
-						<UpdateForm confirm={confirmHandler} cancel={cancelHandler} />
+						<UpdateForm
+							confirm={confirmHandler}
+							cancel={cancelHandler}
+							name={userName}
+							setName={setUserName}
+							pw={password}
+							setPw={setPassword}
+						/>
 					</View>
 				)}
 			</View>

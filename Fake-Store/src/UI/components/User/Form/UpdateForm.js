@@ -1,23 +1,17 @@
 import { View, StyleSheet, Text } from "react-native";
 import { ImageButton } from "../../ImageButton";
 import { TInput } from "../../TInput";
-import { useState } from "react";
-import { useSelector } from "react-redux";
 
-export const UpdateForm = ({ confirm, cancel }) => {
-	const userInfo = useSelector((state) => state.auth.userInfo);
-
-	const [userName, setUserName] = useState(userInfo.name);
-	const [password, setPassword] = useState("");
+export const UpdateForm = ({ confirm, cancel, name, setName, pw, setPw }) => {
 
 	return (
 		<View style={styles.updateForm}>
 			<Text style={styles.title}>Update new username and password</Text>
-			<TInput name="New Username" value={userName} onChange={setUserName} />
+			<TInput name="New Username" value={name} onChange={setName} />
 			<TInput
 				name="New Password"
-				value={password}
-				onChange={setPassword}
+				value={pw}
+				onChange={setPw}
 				secure={true}
 			/>
 			<View style={styles.buttonPanel}>
